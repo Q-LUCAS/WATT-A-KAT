@@ -3,9 +3,17 @@
  <tileset firstgid="1" name="Happy_New_Year_3" tilewidth="32" tileheight="32">
   <image source="tuiles/Happy_New_Year_3.png" width="768" height="768"/>
  </tileset>
+ <tileset firstgid="577" name="tuto-slick2d-037-tuile-logic" tilewidth="32" tileheight="32">
+  <image source="tuiles/tuto-slick2d-037-tuile-logic.png" width="160" height="160"/>
+ </tileset>
  <layer name="Calque de Tile 1" width="25" height="19">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAACxNmYGAQpiGWgNIvaIhH7Ri1Y9SOUTtG7Ri1gxI7aI0BIOvNPmwHAAA=
+  </data>
+ </layer>
+ <layer name="logic" width="25" height="19">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC3NkYmBwpAOmJRi1Y9SOUTtG7Ri1Y9QOSuygNQYAcUEInGwHAAA=
   </data>
  </layer>
 </map>

@@ -16,24 +16,24 @@ public class WindowGame extends BasicGame {
 
 	private GameContainer container;
 	private TiledMap map;
-	private float x = 80, y = 80;
+	private float x = 16, y = 90;
 	private int direction = 2;
 	private boolean moving = false;
 	private Animation[] animations = new Animation[8];
 
 	public static void main(String[] args) throws SlickException {
-		new AppGameContainer(new WindowGame(), 800, 600, false).start();
+		new AppGameContainer(new WindowGame(), 1920, 1080, false).start();
 	}
 
 	public WindowGame() {
-		super("Lesson 1 :: WindowGame");
+		super("WATT-A-KAT");
 	}
 
 	@Override
 	public void init(GameContainer container) throws SlickException {
 		this.container = container;
 		this.map = new TiledMap("F:\\eclipse-workspace\\WAT-A-KAT\\src\\main\\ressources\\map\\MAP.tmx");
-		SpriteSheet spriteSheet = new SpriteSheet("F:\\eclipse-workspace\\WAT-A-KAT\\src\\main\\ressources\\sprite\\BODY_male.png", 64, 64);
+		SpriteSheet spriteSheet = new SpriteSheet("F:\\eclipse-workspace\\WAT-A-KAT\\src\\main\\ressources\\sprite\\chat.png", 64, 64);
 		this.animations[0] = loadAnimation(spriteSheet, 0, 1, 0);
 		this.animations[1] = loadAnimation(spriteSheet, 0, 1, 1);
 		this.animations[2] = loadAnimation(spriteSheet, 0, 1, 2);
@@ -57,7 +57,7 @@ public class WindowGame extends BasicGame {
 		this.map.render(0, 0);
 		g.setColor(new Color(0, 0, 0, .5f));
 		g.fillOval(x - 16, y - 8, 32, 16);
-		g.drawAnimation(animations[direction + (moving ? 4 : 0)], x - 32, y - 60);
+		g.drawAnimation(animations[direction + (moving ? 4 : 0)], x - 32, y - 50);
 	}
 
 	@Override

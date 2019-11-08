@@ -6,6 +6,7 @@ import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
@@ -16,13 +17,14 @@ public class WindowGame extends BasicGame {
 
 	private GameContainer container;
 	private TiledMap map;
-	private float x = 16, y = 90;
+	private float x = 90, y = 90;
 	private int direction = 2;
 	private boolean moving = false;
 	private Animation[] animations = new Animation[8];
+	private float xCamera = x, yCamera = y;
 
 	public static void main(String[] args) throws SlickException {
-		new AppGameContainer(new WindowGame(), 1920, 1080, false).start();
+		new AppGameContainer(new WindowGame(), 1920, 1080, true).start();
 	}
 
 	public WindowGame() {
@@ -52,32 +54,70 @@ public class WindowGame extends BasicGame {
 		return animation;
 	}
 
-	@Override
 	public void render(GameContainer container, Graphics g) throws SlickException {
 		this.map.render(0, 0);
 		g.setColor(new Color(0, 0, 0, .5f));
-		g.fillOval(x - 16, y - 8, 32, 16);
-		g.drawAnimation(animations[direction + (moving ? 4 : 0)], x - 32, y - 50);
+		g.fillOval((int) x - 16, (int) y - 8, 32, 16);
+		g.drawAnimation(animations[direction + (moving ? 4 : 0)],  x - 32,  y - 50);
 	}
 
 	@Override
 	public void update(GameContainer container, int delta) throws SlickException {
+		updateCharacter(delta);
+	}
+
+
+	private void updateCharacter(int delta) {
 		if (this.moving) {
-			switch (this.direction) {
-			case 0:
-				this.y -= .1f * delta;
-				break;
-			case 1:
-				this.x -= .1f * delta;
-				break;
-			case 2:
-				this.y += .1f * delta;
-				break;
-			case 3:
-				this.x += .1f * delta;
-				break;
+			float futurX = getFuturX(delta);
+			float futurY = getFuturY(delta);
+			boolean collision = isCollision(futurX, futurY);
+			if (collision) {
+				this.moving = false;
+			} else {
+				this.x = futurX;
+				this.y = futurY;
 			}
 		}
+	}
+
+	private boolean isCollision(float x, float y) {
+		int tileW = this.map.getTileWidth();
+		int tileH = this.map.getTileHeight();
+		int logicLayer = this.map.getLayerIndex("logic");
+		Image tile = this.map.getTileImage((int) x / tileW, (int) y / tileH, logicLayer);
+		boolean collision = tile != null;
+		if (collision) {
+			Color color = tile.getColor((int) x % tileW, (int) y % tileH);
+			collision = color.getAlpha() > 0;
+		}
+		return collision;
+	}
+
+	private float getFuturX(int delta) {
+		float futurX = this.x;
+		switch (this.direction) {
+		case 1:
+			futurX = this.x - .1f * delta;
+			break;
+		case 3:
+			futurX = this.x + .1f * delta;
+			break;
+		}
+		return futurX;
+	}
+
+	private float getFuturY(int delta) {
+		float futurY = this.y;
+		switch (this.direction) {
+		case 0:
+			futurY = this.y - .1f * delta;
+			break;
+		case 2:
+			futurY = this.y + .1f * delta;
+			break;
+		}
+		return futurY;
 	}
 
 	@Override

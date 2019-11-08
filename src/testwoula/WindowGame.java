@@ -21,7 +21,6 @@ public class WindowGame extends BasicGame {
 	private int direction = 2;
 	private boolean moving = false;
 	private Animation[] animations = new Animation[8];
-	private float xCamera = x, yCamera = y;
 
 	public static void main(String[] args) throws SlickException {
 		new AppGameContainer(new WindowGame(), 1920, 1080, true).start();
@@ -98,10 +97,10 @@ public class WindowGame extends BasicGame {
 		float futurX = this.x;
 		switch (this.direction) {
 		case 1:
-			futurX = this.x - .1f * delta;
+			futurX = this.x - 5f * delta;
 			break;
 		case 3:
-			futurX = this.x + .1f * delta;
+			futurX = this.x + 5f * delta;
 			break;
 		}
 		return futurX;
@@ -111,10 +110,10 @@ public class WindowGame extends BasicGame {
 		float futurY = this.y;
 		switch (this.direction) {
 		case 0:
-			futurY = this.y - .1f * delta;
+			futurY = this.y - 5f * delta;
 			break;
 		case 2:
-			futurY = this.y + .1f * delta;
+			futurY = this.y + 5f * delta;
 			break;
 		}
 		return futurY;
